@@ -35,6 +35,8 @@ import { Interval } from 'luxon'
 import { knex } from 'knex'
 import { AccountAlreadyExistsError } from '../../../accounting/errors'
 import { PaymentMethodHandlerService } from '../../../payment-method/handler/service'
+import { TelemetryService } from '../../../telemetry/meter'
+import { Metrics } from '../../../telemetry/meter'
 
 export interface OutgoingPaymentService
   extends WalletAddressSubresourceService<OutgoingPayment> {
@@ -49,6 +51,7 @@ export interface OutgoingPaymentService
 
 export interface ServiceDependencies extends BaseService {
   knex: TransactionOrKnex
+  telemetryService?: TelemetryService
   accountingService: AccountingService
   receiverService: ReceiverService
   peerService: PeerService
@@ -391,6 +394,9 @@ async function fundPayment(
       return error
     }
     await payment.$query(trx).patch({ state: OutgoingPaymentState.Sending })
+
+    deps.telemetryService?.getCounter(Metrics.TRANSACTIONS_TOTAL)?.add(1)
+
     return await addSentAmount(deps, payment)
   })
 }
