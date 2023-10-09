@@ -191,11 +191,13 @@ export async function createAccountToAccountTransfer(
         console.log(
           `######################## [TELEMETRY]Gathering Transaction amount  ####################`
         )
+
+        const scalingFactor = destinationAccount.asset.scale ? Math.pow(10, 2 - destinationAccount.asset.scale) : undefined
+        const totalReceivedInAssetScale2 = Number(totalReceived) * Number(scalingFactor)
         telemetry
           ?.getCounter(Metrics.TRANSACTIONS_AMOUNT)
-          ?.add(Number(totalReceived), {
-            'asset_code:': destinationAccount.asset.code,
-            'asset_scale:': destinationAccount.asset.scale
+          ?.add(totalReceivedInAssetScale2, {
+            'asset_code:': destinationAccount.asset.code
           })
       }
     },
