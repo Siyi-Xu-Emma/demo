@@ -18,6 +18,7 @@ import { BaseService } from '../shared/baseService'
 
 export interface TelemetryService {
   getCounter(name: string): Counter | undefined
+  getServiceName(): string | undefined
 }
 
 interface TelemetryServiceDependencies extends BaseService {
@@ -38,16 +39,18 @@ export function createTelemetryService(
 }
 
 class TelemetryServiceImpl implements TelemetryService {
+  private serviceName: string | undefined
+
   private counters = new Map()
   constructor(private deps: TelemetryServiceDependencies) {
     diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG)
-
+    this.serviceName = deps.serviceName
     console.log(
       `serviceName: ${deps.serviceName}, collectorUrl: ${deps.collectorUrl} }`
     )
 
     const meterProvider = new MeterProvider({
-      resource: new Resource({ 'service.name': deps.serviceName ?? 'Rafiki' })
+      resource: new Resource({ 'service.name': 'RAFIKI_NETWORK' })
     })
 
     const metricExporter = new OTLPMetricExporter({
@@ -85,5 +88,9 @@ class TelemetryServiceImpl implements TelemetryService {
 
   public getCounter(name: string): Counter | undefined {
     return this.counters.get(name)
+  }
+
+  public getServiceName(): string | undefined {
+    return this.serviceName
   }
 }
