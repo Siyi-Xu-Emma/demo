@@ -63,8 +63,8 @@ services:
       ILP_CONNECTOR_ADDRESS: ${CLOUD_NINE_CONNECTOR_URL}
       ENABLE_TELEMETRY: true
       OPEN_TELEMETRY_COLLECTOR_URL: http://cloud-nine-otel-collector:4317
-      OPEN_TELEMETRY_EXPORT_INTERVAL: 60000
-      TELEMETRY_SERVICE_NAME: RAFIKI
+      OPEN_TELEMETRY_EXPORT_INTERVAL: 20000
+      TELEMETRY_SERVICE_NAME: CLOUD-NINE
     depends_on:
       - shared-database
       - shared-redis
