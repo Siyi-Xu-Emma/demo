@@ -33,13 +33,13 @@ accounts:
     assetCode: USD
   - name: 'Bert Hamchest'
     id: a9adbe1a-df31-4766-87c9-d2cb2e636a9b
-    initialBalance: 4000
+    initialBalance: 400000
     path: accounts/bhamchest
     postmanEnvVar: bhamchestWalletAddress
     assetCode: USD
   - name: "World's Best Donut Co"
     id: 5726eefe-8737-459d-a36b-0acce152cb90
-    initialBalance: 2000
+    initialBalance: 200000
     path: accounts/wbdc
     postmanEnvVar: wbdcWalletAddress
     assetCode: USD

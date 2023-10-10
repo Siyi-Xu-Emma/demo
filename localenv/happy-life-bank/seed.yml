@@ -33,7 +33,7 @@ accounts:
     assetCode: USD
   - name: 'PlanEx Corp'
     id: a455cc54-b583-455b-836a-e5275c5c05b7
-    initialBalance: 2000
+    initialBalance: 200000
     path: accounts/planex
     postmanEnvVar: planexWalletAddress
     assetCode: USD
@@ -47,12 +47,12 @@ accounts:
   - name: 'Lars'
     path: accounts/lars
     id: fd4ecbc9-205d-4ecd-a030-507d6ce2bde6
-    initialBalance: 5000
+    initialBalance: 500000
     assetCode: EUR
   - name: 'David'
     path: accounts/david
     id: 60257507-3191-4507-9d77-9071fd6b3c30
-    initialBalance: 150000
+    initialBalance: 15000000
     assetCode: MXN
 rates:
   EUR:
