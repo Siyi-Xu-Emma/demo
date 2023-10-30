@@ -55,7 +55,7 @@ services:
       WALLET_ADDRESS_URL: ${HAPPY_LIFE_BANK_WALLET_ADDRESS_URL:-https://happy-life-bank-backend/.well-known/pay}
       ENABLE_TELEMETRY: true
       OPEN_TELEMETRY_COLLECTOR_URL: http://happy-life-otel-collector:4317
-      OPEN_TELEMETRY_EXPORT_INTERVAL: 20000
+      OPEN_TELEMETRY_EXPORT_INTERVAL: 15000
       TELEMETRY_SERVICE_NAME: HAPPY-LIFE
 
     depends_on:

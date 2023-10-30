@@ -188,16 +188,37 @@ export async function createAccountToAccountTransfer(
           withdrawalThrottleDelay
         })
 
+        telemetry?.getCounter(Metrics.TRANSACTIONS_TOTAL)?.add(1, {
+          source: telemetry?.getServiceName() ?? 'Rafiki',
+          asset_code: destinationAccount.asset.code
+        })
+
         console.log(
           `######################## [TELEMETRY]Gathering Transaction amount  ####################`
         )
 
-        const scalingFactor = destinationAccount.asset.scale ? Math.pow(10, 4 - destinationAccount.asset.scale) : undefined
-        const totalReceivedInAssetScale4 = Number(totalReceived) * Number(scalingFactor)
+        const scalingFactor = destinationAccount.asset.scale
+          ? Math.pow(10, 4 - destinationAccount.asset.scale)
+          : undefined
+        console.log(
+          `scaling factor is: Math.pow(10 , 4 - ${destinationAccount.asset.scale}) === ${scalingFactor}`
+        )
+
+        const totalReceivedInAssetScale4 =
+          Number(totalReceived) * Number(scalingFactor)
+
+        console.log(
+          `totalReceivedInAssetScale4 =   totalReceived(${totalReceived}) * scalingFactor(${scalingFactor})`
+        )
+
+        console.log(
+          `totalReceivedInAssetScale4 is ${totalReceivedInAssetScale4}`
+        )
         telemetry
           ?.getCounter(Metrics.TRANSACTIONS_AMOUNT)
           ?.add(totalReceivedInAssetScale4, {
-            'asset_code:': destinationAccount.asset.code
+            asset_code: destinationAccount.asset.code,
+            source: telemetry?.getServiceName() ?? 'Rafiki'
           })
       }
     },

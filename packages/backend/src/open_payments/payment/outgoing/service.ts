@@ -395,9 +395,7 @@ async function fundPayment(
     }
     await payment.$query(trx).patch({ state: OutgoingPaymentState.Sending })
 
-    deps.telemetryService
-      ?.getCounter(Metrics.TRANSACTIONS_TOTAL)
-      ?.add(1, { source: deps.telemetryService?.getServiceName() ?? 'Rafiki' })
+    //Transactions total metric mighe need to be used here
 
     return await addSentAmount(deps, payment)
   })
