@@ -28,7 +28,7 @@ accounts:
   - name: 'Grace Franklin'
     path: accounts/gfranklin
     id: 742ab7cd-1624-4d2e-af6e-e15a71638669
-    initialBalance: 4000
+    initialBalance: 50000
     postmanEnvVar: gfranklinWalletAddress
     assetCode: USD
   - name: 'Bert Hamchest'
