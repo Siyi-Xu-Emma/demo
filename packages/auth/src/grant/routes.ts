@@ -182,7 +182,7 @@ function isContinuableGrant(grant: Grant): boolean {
 
 function isGrantStillWaiting(grant: Grant): boolean {
   if (!grant.wait) return false
-  const grantWaitTime = grant.createdAt.getTime() + (grant.wait * 1000)
+  const grantWaitTime = grant.createdAt.getTime() + grant.wait * 1000
   const currentTime = Date.now()
 
   return currentTime < grantWaitTime
@@ -202,7 +202,7 @@ async function pollGrantContinuation(
   }
 
   if (isGrantStillWaiting(grant)) {
-    ctx.throw(401, { error: 'too_fast'})
+    ctx.throw(401, { error: 'too_fast' })
   }
 
   /*
@@ -266,13 +266,11 @@ async function continueGrant(
     interactionService
   } = deps
 
-  // TODO: enforce wait
   if (!ctx.request.body || Object.keys(ctx.request.body).length === 0) {
     await pollGrantContinuation(deps, ctx, continueId, continueToken)
     return
   }
 
-  // TODO: enforce wait
   const interaction = await interactionService.getByRef(interactRef as string)
   if (
     !interaction ||
@@ -281,7 +279,7 @@ async function continueGrant(
   ) {
     ctx.throw(404, { error: 'unknown_request' })
   } else if (isGrantStillWaiting(interaction.grant)) {
-    ctx.throw(401, { error: 'too_fast'})
+    ctx.throw(401, { error: 'too_fast' })
   } else {
     const { grant } = interaction
     if (grant.state !== GrantState.Approved) {
